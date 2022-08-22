@@ -10,18 +10,28 @@ module.exports.getGuards = async (req: Request, res: Response, next: NextFunctio
 
     console.log("Entered /guards");
 
-    await Guard.find().exec((err: any, guards: any) => {
-        if (err) {
-            res.status(400).send('error trying to save the record');
+    try{
+        await Guard.find().exec((err: any, guards: any) => {
+            if (err) {
+                res.status(400).send('error trying to save the record');
+    
+            } else {
+                res.status(201);
+                console.log(guards);
+                res.json(guards);
+    
+            }
+        });
+    
 
-        } else {
-            res.status(201);
-            console.log(guards);
-            res.json(guards);
+    }
 
-        }
-    });
+    catch (error:any){
+        console.log(error);
 
+    }
+
+   
 }
 
 module.exports.addGuard = async (req: Request, res: Response, next: NextFunction) => {

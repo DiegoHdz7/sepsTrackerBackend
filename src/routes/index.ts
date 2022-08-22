@@ -1,5 +1,5 @@
 import express, { Request,Response,NextFunction } from "express";
-var guardControllers = require( '../controllers/guardController');
+var clientControllers = require( '../controllers/indexController');
 var router = express.Router();
 
 
@@ -7,16 +7,16 @@ var router = express.Router();
 
 
 //get  Guards List
-router.get('/', guardControllers.getGuards);
+//router.get('/', guardControllers.getGuards);
 
 
 //POST Routes
-router.post('/client', guardControllers.addGuard);
+router.post('/client', clientControllers.addClient);
 
 //PUT Routes
-router.put('/client/:id', guardControllers.updateGuard);
+//router.put('/client/:id', guardControllers.updateGuard);
 
 //DELETE Routes
-router.delete('/client/:id', guardControllers.delete);
+//router.delete('/client/:id', guardControllers.delete);
 
 module.exports = router;
