@@ -1,12 +1,10 @@
-import mongoose, { Schema } from "mongoose";
+//import mongoose, { Schema } from "mongoose";
+import mongoose, {Schema, Document, Types } from 'mongoose';
 import IClient from "../interfaces/client";
-import IGuard from "../interfaces/guard";
-import guard from "./guard";
+import Guard from "./guard";
 
-
-//type guard = IGuard;
-
-
+//Getting the schema from the model Guard
+var GuardSchema = require('mongoose').model('Guard').schema;
 
 //create book model
 let ClientSchema: Schema = new Schema(
@@ -23,16 +21,12 @@ let ClientSchema: Schema = new Schema(
             phoneNumber: { type: Number },
             email: { type: String }
         },
-        //guards: {type: [IGuard]}
+        guards: {type: GuardSchema}
     },
 
     {
         timestamps: true
     }
-
-     
-        
-
 );
 
 export default mongoose.model<IClient>('Client', ClientSchema);

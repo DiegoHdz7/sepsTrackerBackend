@@ -7,16 +7,16 @@ var router = express.Router();
 
 
 //get  Guards List
-//router.get('/', guardControllers.getGuards);
+router.get('/', clientControllers.getClients);
 
 
 //POST Routes
 router.post('/client', clientControllers.addClient);
 
 //PUT Routes
-//router.put('/client/:id', guardControllers.updateGuard);
+router.put('/client/:id', clientControllers.updateClient);
 
 //DELETE Routes
-//router.delete('/client/:id', guardControllers.delete);
+router.delete('/client/:id', clientControllers.delete);
 
 module.exports = router;

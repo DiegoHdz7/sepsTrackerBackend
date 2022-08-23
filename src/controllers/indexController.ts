@@ -28,37 +28,10 @@ module.exports.getClients = async (req: Request, res: Response, next: NextFuncti
     }  
 }
 
-
 module.exports.addClient = async (req: Request, res: Response, next: NextFunction) => {
-    /*
-
-    codeName: { type: String },
-        name: { type: String },
-        rfc: { type: String },
-        address: { type: String },
-        logoPath: { type: String },
-        contact: {
-            phoneNumber: { type: Number },
-            email: { type: String }
-        },
-        guards: {type: [guard]}
-    */
-
     try{
-        const newClient = new Client({
-            codeName:req.body.codeName,
-            name: req.body.name,
-            rfc: req.body.rfc,
-            address:req.body.address,
-            logoPath: req.body.logoPath,
-           // guards:req.body.guard,
-            contact: {
-                email: req.body.email,
-                phoneNumber: req.body.phoneNumber
-    
-            }
-    
-        });
+
+        const newClient = new Client (req.body);
     
         await newClient.save((err: any) => {
             if (err) {
@@ -78,10 +51,46 @@ module.exports.addClient = async (req: Request, res: Response, next: NextFunctio
     catch(error: any){
         console.log(error.message);
     }
-     
-   
-
 }
+
+module.exports.updateClient = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        //"_id" :req.params.id,
+        const id = req.params.id;
+
+        const clientToUpdate = new Client(req.body);
+
+        Client.updateOne({ _id: id }, clientToUpdate, (err: any) => { //updating the document that matches the id with the previous obj
+
+            if (err) {
+                console.log(err);
+                res.status(400).send('body syntax error');
+            } else {
+                res.status(201).send('Client updated successfuly');
+            }
+
+        })
+
+    } catch (e:any) {
+        console.log(e);
+        
+
+    }
+}
+
+module.exports.delete =  (req:Request, res:Response, next:NextFunction) => {
+    let id = req.params.id;
+    Client.remove({_id:id}, (err:any) =>{      //removing document that matched the _id
+        if(err){
+            console.log(err);
+            res.status(400).send('deleting record was not possible');
+         }else{
+             res.status(204).redirect('/');
+         }
+
+    })
+}
+
 
 
 
